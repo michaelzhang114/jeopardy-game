@@ -1,10 +1,10 @@
 import "./scss/style.scss";
 
 const plusButton = document.querySelector(".score-controls .add");
-console.log(plusButton);
+//console.log(plusButton);
 
 const minusButton = document.querySelector(".score-controls .minus");
-console.log(minusButton);
+//console.log(minusButton);
 
 var score = document.querySelector("#score").firstChild.nodeValue;
 
