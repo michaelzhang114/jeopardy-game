@@ -1,4 +1,5 @@
 import "./scss/style.scss";
+import { printQuiz } from "./quiz";
 
 const plusButton = document.querySelector(".score-controls .add");
 //console.log(plusButton);
@@ -85,3 +86,6 @@ function updateScore() {
 document.addEventListener("click", function (evnt) {
 	updateScore(); // update all scores when a click happens
 });
+
+// print quiz
+printQuiz();
