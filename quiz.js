@@ -1,27 +1,81 @@
-export function printQuiz() {
+function makeQuiz() {
 	var questionsForCE = [
-		{ question: "Question A", answer: "this is an answer" },
-		{ question: "Question B", answer: "this is an answer" },
-		{ question: "Question C", answer: "this is an answer" },
-		{ question: "Question D", answer: "this is an answer" },
+		{
+			question:
+				"In Disney's \"The Little Mermaid,\" what is the name of Ariel's father, the ruler of the underwater kingdom?",
+			answer: "King Triton",
+		},
+		{
+			question:
+				'In Disney\'s "Aladdin," what does the Genie turn into when Aladdin wishes to set him free?',
+			answer: "a human",
+		},
+		{
+			question:
+				'In the Disney classic "Beauty and the Beast," what is the name of the villainous hunter who seeks to marry Belle?',
+			answer: "Gaston",
+		},
+		{
+			question:
+				'Who directed the 2016 live-action adaptation of "The Jungle Book" for Disney, blending CGI and live-action elements?',
+			answer: "Jon Favreau",
+		},
 	];
 	var questionsForHistory = [
-		{ question: "Question A", answer: "this is an answer" },
-		{ question: "Question B", answer: "this is an answer" },
-		{ question: "Question C", answer: "this is an answer" },
-		{ question: "Question D", answer: "this is an answer" },
+		{
+			question:
+				"What empire was founded by Genghis Khan and became the largest contiguous empire in history?",
+			answer: "Mongol Empire",
+		},
+		{
+			question:
+				"Julius Caesar was assassinated on 15 March 44 BC, a date now often known by what term?",
+			answer: "Ides of March",
+		},
+		{
+			question:
+				"Which document, adopted on July 4, 1776, declared the Thirteen American Colonies' independence from Great Britain?",
+			answer: "Declaration of Independence",
+		},
+		{
+			question:
+				"Who was the leader of the Soviet Union during the Cuban Missile Crisis?",
+			answer: "Nikita Khrushchev",
+		},
 	];
 	var questionsForScience = [
-		{ question: "Question A", answer: "this is an answer" },
-		{ question: "Question B", answer: "this is an answer" },
-		{ question: "Question C", answer: "this is an answer" },
-		{ question: "Question D", answer: "this is an answer" },
+		{
+			question: "What is the smallest planet in our solar system?",
+			answer: "Mercury",
+		},
+		{
+			question: "What is the chemical symbol for the element gold?",
+			answer: "Au",
+		},
+		{
+			question:
+				"What is the process by which plants convert sunlight into chemical energy?",
+			answer: "photosynthesis",
+		},
+		{
+			question:
+				'What is the scientific name for the "voice box" in humans responsible for sound production?',
+			answer: "What is the larynx",
+		},
 	];
 	var questionsForGK = [
-		{ question: "Question A", answer: "this is an answer" },
-		{ question: "Question B", answer: "this is an answer" },
-		{ question: "Question C", answer: "this is an answer" },
-		{ question: "Question D", answer: "this is an answer" },
+		{ question: "Boise is the capitol of what state?", answer: "Idaho" },
+		{ question: "What does a monophone fear?", answer: "Being alone" },
+		{
+			question:
+				"With how many bricks is the Empire State Building made of? A.) 100 million  B.) 5 million C.) 20 million  D.)10 million",
+			answer: "10 million",
+		},
+		{
+			question:
+				"What is the name of the deepest point in Earth’s oceans? ",
+			answer: "Mariana’s Trench ",
+		},
 	];
 
 	var arrayOfQuestions = [];
@@ -32,12 +86,7 @@ export function printQuiz() {
 	arrayOfQuestions.push(questionsForGK);
 	//console.log(arrayOfQuestions);
 
-	var categories = [
-		"Current Events",
-		"History",
-		"Science",
-		"General Knowledge",
-	];
+	var categories = ["Disney", "History", "Science", "General Knowledge"];
 
 	var quizMap = new Map();
 
@@ -47,6 +96,98 @@ export function printQuiz() {
 		quizMap.set(categories[i], arrayOfQuestions[i]);
 	}
 
-	console.log("my quiz: \n");
-	console.log(quizMap);
+	return [quizMap, [100, 200, 300, 400]];
+}
+
+export function generateQuizGrid() {
+	const [quizMap, questionPoints] = makeQuiz();
+	// console.log("my quiz: \n");
+	//console.log(quizMap);
+	// console.log(questionPoints);
+	const qGrid = document.querySelector(".grid__main");
+	console.log(qGrid);
+	const table = document.createElement("table");
+	qGrid.append(table);
+
+	// create the header row with categories
+	const headerRow = document.createElement("tr");
+	var categories = quizMap.keys();
+	while (true) {
+		var result = categories.next();
+		if (result.done) break;
+		//console.log(result.value);
+		var th = document.createElement("th");
+		th.textContent = result.value;
+		headerRow.append(th);
+	}
+	table.append(headerRow);
+
+	const myQuizArray = flattenMapToArray(quizMap);
+	//console.log(myQuizArray);
+
+	// populate the rows
+	var numberOfQuestionsPerCategory = quizMap.values().next().value.length;
+
+	for (var i = 0; i < numberOfQuestionsPerCategory; i++) {
+		var tr = document.createElement("tr");
+		const currentQValue = questionPoints[i];
+		for (var j = 0; j < numberOfQuestionsPerCategory; j++) {
+			var td = document.createElement("td");
+			td.textContent = currentQValue;
+			td.setAttribute("data-question", myQuizArray[i][j].question);
+			td.setAttribute("data-answer", myQuizArray[i][j].answer);
+			//console.log(td.getAttribute("data-question"));
+			td.addEventListener("click", (e) => showQuestion(e));
+			tr.append(td);
+		}
+		table.append(tr);
+	}
+
+	const cells = table.getElementsByTagName("td");
+	//console.log(cells);
+	for (var i = 0; i < cells.length; i++) {
+		var cell = cells[i];
+		//console.log(cell);
+		// cell.addEventListener("click", () => {
+		// 	var q = cell.getAttribute("data-question");
+		// 	alert(q);
+		// });
+	}
+	//console.log(cells);
+}
+
+const showQuestion = (e) => {
+	alert(e.target.getAttribute("data-question"));
+	console.log(e.target.getAttribute("data-answer"));
+};
+
+function flattenMapToArray(myMap) {
+	var myVals = myMap.values();
+	var outputArr = [];
+	while (true) {
+		var row = myVals.next();
+		if (row.done) break;
+		outputArr.push(row.value);
+	}
+	return transposeMatrix(outputArr);
+	//return outputArr;
+}
+
+function transposeMatrix(matrix) {
+	//change an array of arrays from an n by m matrix to an m by n matrix
+
+	// Get the number of rows and columns in the original matrix
+	const numRows = matrix.length;
+	const numCols = matrix[0].length;
+
+	// Create a new matrix with dimensions swapped (m by n)
+	const transposedMatrix = Array.from({ length: numCols }, () => []);
+
+	// Iterate through the original matrix and transpose elements
+	for (let i = 0; i < numRows; i++) {
+		for (let j = 0; j < numCols; j++) {
+			transposedMatrix[j][i] = matrix[i][j];
+		}
+	}
+	return transposedMatrix;
 }

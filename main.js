@@ -1,5 +1,5 @@
 import "./scss/style.scss";
-import { printQuiz } from "./quiz";
+import { generateQuizGrid } from "./quiz";
 
 const plusButton = document.querySelector(".score-controls .add");
 //console.log(plusButton);
@@ -88,4 +88,4 @@ document.addEventListener("click", function (evnt) {
 });
 
 // print quiz
-printQuiz();
+generateQuizGrid();
