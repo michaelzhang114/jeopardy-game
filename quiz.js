@@ -137,28 +137,55 @@ export function generateQuizGrid() {
 			td.setAttribute("data-question", myQuizArray[i][j].question);
 			td.setAttribute("data-answer", myQuizArray[i][j].answer);
 			//console.log(td.getAttribute("data-question"));
-			td.addEventListener("click", (e) => showQuestion(e));
+			// td.addEventListener("click", (e) => showQuestion(e, td));
+			// Use a function to create a closure
+			td.addEventListener(
+				"click",
+				(function (td) {
+					return function (e) {
+						showQuestion(e, td);
+					};
+				})(td)
+			);
 			tr.append(td);
 		}
 		table.append(tr);
 	}
+	const myCloseBtn = document.getElementById("close-question-modal");
+	myCloseBtn.addEventListener("click", (e) => hideQuestion(e));
 
-	const cells = table.getElementsByTagName("td");
-	//console.log(cells);
-	for (var i = 0; i < cells.length; i++) {
-		var cell = cells[i];
-		//console.log(cell);
-		// cell.addEventListener("click", () => {
-		// 	var q = cell.getAttribute("data-question");
-		// 	alert(q);
-		// });
-	}
-	//console.log(cells);
+	const myShowAnswerBtn = document.getElementById("reveal-answer");
+	myShowAnswerBtn.addEventListener("click", (e) => showAnswer(e));
 }
 
-const showQuestion = (e) => {
-	alert(e.target.getAttribute("data-question"));
-	console.log(e.target.getAttribute("data-answer"));
+const hideQuestion = (e) => {
+	const modalContainer = document.getElementById("modal-container");
+	modalContainer.classList.remove("show");
+	const myAnswer = document.getElementById("answer");
+	myAnswer.classList.add("hidden");
+};
+
+const showQuestion = (e, td) => {
+	//alert(e.target.getAttribute("data-question"));
+	//console.log(e.target.getAttribute("data-answer"));
+	const modalContainer = document.getElementById("modal-container");
+	modalContainer.classList.add("show");
+	const question = document.getElementById("question");
+	question.innerText = e.target.getAttribute("data-question");
+
+	const answer = document.getElementById("answer");
+	answer.innerText = e.target.getAttribute("data-answer");
+
+	const myShowAnswerBtn = document.getElementById("reveal-answer");
+	myShowAnswerBtn.addEventListener("click", () =>
+		showAnswer(e.target.getAttribute("data-answer"))
+	);
+};
+
+const showAnswer = () => {
+	const myAnswer = document.getElementById("answer");
+	myAnswer.classList.remove("hidden");
+	//console.log(myAnswer.parentElement.parentElement);
 };
 
 function flattenMapToArray(myMap) {
