@@ -1,5 +1,5 @@
 import "./scss/style.scss";
-import { generateQuizGrid } from "./quiz";
+import { generateQuizGrid, getGlobalPoints } from "./quiz";
 
 const plusButton = document.querySelector(".score-controls .add");
 //console.log(plusButton);
@@ -8,9 +8,9 @@ const minusButton = document.querySelector(".score-controls .minus");
 //console.log(minusButton);
 
 var teams = [
-	{ teamName: "Team A", score: 100 },
-	{ teamName: "Team B", score: 200 },
-	{ teamName: "Team C", score: -100 },
+	{ teamName: "Team A", score: 0 },
+	{ teamName: "Team B", score: 0 },
+	{ teamName: "Team C", score: 0 },
 ];
 
 const footer = document.querySelector(".grid__footer");
@@ -56,12 +56,12 @@ teams.forEach((t) => {
 
 	//console.log(scoreHTML);
 	addBtn.addEventListener("click", function () {
-		var incr = 100;
+		var incr = getGlobalPoints();
 		t.score += incr;
 		updateScore();
 	});
 	minusBtn.addEventListener("click", function () {
-		var incr = -100;
+		var incr = getGlobalPoints() * -1;
 		t.score += incr;
 		updateScore();
 	});

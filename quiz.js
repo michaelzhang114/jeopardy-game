@@ -1,3 +1,5 @@
+var global_q_points = 100;
+
 function makeQuiz() {
 	var questionsForCE = [
 		{
@@ -99,6 +101,10 @@ function makeQuiz() {
 	return [quizMap, [100, 200, 300, 400]];
 }
 
+export function getGlobalPoints() {
+	return parseInt(global_q_points);
+}
+
 export function generateQuizGrid() {
 	const [quizMap, questionPoints] = makeQuiz();
 	// console.log("my quiz: \n");
@@ -136,6 +142,7 @@ export function generateQuizGrid() {
 			td.textContent = currentQValue;
 			td.setAttribute("data-question", myQuizArray[i][j].question);
 			td.setAttribute("data-answer", myQuizArray[i][j].answer);
+			td.setAttribute("data-points", currentQValue);
 			//console.log(td.getAttribute("data-question"));
 			// td.addEventListener("click", (e) => showQuestion(e, td));
 			// Use a function to create a closure
@@ -154,8 +161,8 @@ export function generateQuizGrid() {
 	const myCloseBtn = document.getElementById("close-question-modal");
 	myCloseBtn.addEventListener("click", (e) => hideQuestion(e));
 
-	const myShowAnswerBtn = document.getElementById("reveal-answer");
-	myShowAnswerBtn.addEventListener("click", (e) => showAnswer(e));
+	// const myShowAnswerBtn = document.getElementById("reveal-answer");
+	// myShowAnswerBtn.addEventListener("click", (e) => showAnswer(e));
 }
 
 const hideQuestion = (e) => {
@@ -163,11 +170,18 @@ const hideQuestion = (e) => {
 	modalContainer.classList.remove("show");
 	const myAnswer = document.getElementById("answer");
 	myAnswer.classList.add("hidden");
+	global_q_points = 100;
+	console.log(global_q_points);
 };
 
 const showQuestion = (e, td) => {
 	//alert(e.target.getAttribute("data-question"));
 	//console.log(e.target.getAttribute("data-answer"));
+
+	const myQPoints = td.getAttribute("data-points");
+	global_q_points = myQPoints;
+	console.log(global_q_points);
+
 	const modalContainer = document.getElementById("modal-container");
 	modalContainer.classList.add("show");
 	const question = document.getElementById("question");
