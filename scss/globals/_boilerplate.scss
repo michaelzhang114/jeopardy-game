@@ -37,6 +37,11 @@ td:hover {
 	background-color: rgb(133, 23, 170);
 }
 
+.answerShown {
+	background-color: rgb(133, 23, 170);
+	pointer-events: none;
+}
+
 hr {
 	padding-top: 0;
 }

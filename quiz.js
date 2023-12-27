@@ -171,20 +171,31 @@ const showQuestion = (e, td) => {
 	const modalContainer = document.getElementById("modal-container");
 	modalContainer.classList.add("show");
 	const question = document.getElementById("question");
-	question.innerText = e.target.getAttribute("data-question");
+	//question.innerText = e.target.getAttribute("data-question");
+	question.innerText = td.getAttribute("data-question");
 
 	const answer = document.getElementById("answer");
-	answer.innerText = e.target.getAttribute("data-answer");
+	//answer.innerText = e.target.getAttribute("data-answer");
+	answer.innerText = td.getAttribute("data-answer");
 
 	const myShowAnswerBtn = document.getElementById("reveal-answer");
-	myShowAnswerBtn.addEventListener("click", () =>
-		showAnswer(e.target.getAttribute("data-answer"))
+	// myShowAnswerBtn.addEventListener("click", () =>
+	// 	showAnswer(e.target.getAttribute("data-answer"))
+	// );
+	myShowAnswerBtn.addEventListener(
+		"click",
+		(function (td) {
+			return function (e) {
+				showAnswer(e, td);
+			};
+		})(td)
 	);
 };
 
-const showAnswer = () => {
+const showAnswer = (e, td) => {
 	const myAnswer = document.getElementById("answer");
 	myAnswer.classList.remove("hidden");
+	td.classList.add("answerShown");
 	//console.log(myAnswer.parentElement.parentElement);
 };
 
