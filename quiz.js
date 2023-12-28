@@ -209,6 +209,7 @@ const showQuestion = (e, td) => {
 const showAnswer = (e, td) => {
 	const myAnswer = document.getElementById("answer");
 	myAnswer.classList.remove("hidden");
+	console.log(td);
 	td.classList.add("answerShown");
 	//console.log(myAnswer.parentElement.parentElement);
 };
