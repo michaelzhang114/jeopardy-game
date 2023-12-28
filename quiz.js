@@ -62,7 +62,7 @@ function makeQuiz() {
 		{
 			question:
 				'What is the scientific name for the "voice box" in humans responsible for sound production?',
-			answer: "What is the larynx",
+			answer: "Larynx",
 		},
 	];
 	var questionsForGK = [
@@ -111,7 +111,7 @@ export function generateQuizGrid() {
 	//console.log(quizMap);
 	// console.log(questionPoints);
 	const qGrid = document.querySelector(".grid__main");
-	console.log(qGrid);
+	//console.log(qGrid);
 	const table = document.createElement("table");
 	qGrid.append(table);
 
@@ -171,7 +171,7 @@ const hideQuestion = (e) => {
 	const myAnswer = document.getElementById("answer");
 	myAnswer.classList.add("hidden");
 	global_q_points = 100;
-	console.log(global_q_points);
+	//console.log(global_q_points);
 };
 
 const showQuestion = (e, td) => {
@@ -180,7 +180,7 @@ const showQuestion = (e, td) => {
 
 	const myQPoints = td.getAttribute("data-points");
 	global_q_points = myQPoints;
-	console.log(global_q_points);
+	//console.log(global_q_points);
 
 	const modalContainer = document.getElementById("modal-container");
 	modalContainer.classList.add("show");
