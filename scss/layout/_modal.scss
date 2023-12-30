@@ -35,6 +35,7 @@
 
 .modal p {
 	opacity: 0.9;
+	color: var(--text-color-light);
 }
 
 .modal {
@@ -67,6 +68,29 @@
 	#reveal-answer,
 	#close-question-modal {
 		width: 80%;
+		background-color: var(--primary-color);
+		border: 1px solid var(--primary-color);
+		border-radius: 4px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
+		box-sizing: border-box;
+		color: var(--text-color-light);
+		cursor: pointer;
+		font-size: 12px;
+		font-weight: 400;
+		outline: none;
+		outline: 0;
+		padding: 10px 25px;
+		text-align: center;
+		transform: translateY(0);
+		transition: transform 150ms, box-shadow 150ms;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+	}
+	#reveal-answer:hover,
+	#close-question-modal:hover {
+		box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
+		transform: translateY(-2px);
 	}
 	#question,
 	#answer {

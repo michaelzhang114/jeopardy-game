@@ -28,6 +28,7 @@ table {
 	color: var(--text-color-light);
 	border-collapse: separate;
 	border-spacing: 6px;
+	// font-size: 20px;
 }
 
 th {
@@ -47,6 +48,7 @@ td {
 td {
 	background-color: var(--table-background-color);
 	color: var(--text-color-dark);
+	font-size: 20px;
 }
 
 td:hover {
@@ -54,7 +56,7 @@ td:hover {
 }
 
 .answerShown {
-	background-color: rgb(133, 23, 170);
+	background-color: var(--color-neutral);
 	pointer-events: none;
 }
 
