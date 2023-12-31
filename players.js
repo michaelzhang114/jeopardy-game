@@ -1,9 +1,22 @@
 import { getGlobalPoints } from "./quiz";
+import boringNameGenerator from "boring-name-generator";
+
+const MAX_PLAYERS = 4;
+const MIN_PLAYERS = 2;
 
 var teams = [
-	{ teamName: "Team A", score: 0 },
-	{ teamName: "Team B", score: 0 },
-	{ teamName: "Team C", score: 0 },
+	{
+		teamName: boringNameGenerator({ words: 1, number: true }).dashed,
+		score: 0,
+	},
+	{
+		teamName: boringNameGenerator({ words: 1, number: true }).dashed,
+		score: 0,
+	},
+	{
+		teamName: boringNameGenerator({ words: 1, number: true }).dashed,
+		score: 0,
+	},
 ];
 
 export function makePlayers() {
@@ -44,18 +57,21 @@ export function updateScore() {
 }
 
 function addPlayer() {
-	if (teams.length == 5) {
+	if (teams.length == MAX_PLAYERS) {
 		return;
 	}
 	const footer = document.querySelector(".grid__footer");
-	var newPlayer = { teamName: "New Team", score: 0 };
+	var newPlayer = {
+		teamName: boringNameGenerator({ words: 1, number: true }).dashed,
+		score: 0,
+	};
 	teams.push(newPlayer);
 	createOnePlayer(newPlayer, footer);
 	//console.log(teams);
 }
 
 function removeLastPlayer() {
-	if (teams.length <= 2) return;
+	if (teams.length <= MIN_PLAYERS) return;
 	const footer = document.querySelector(".grid__footer");
 	const allPlayers = footer.querySelectorAll(".player");
 	const lastPlayer = allPlayers[allPlayers.length - 1];
