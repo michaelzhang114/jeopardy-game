@@ -14,15 +14,17 @@ export function makePlayers() {
 		createOnePlayer(t, footer);
 	});
 
+	const footerSide = document.querySelector(".grid__footer-side");
+
 	const addPlayerBtn = document.createElement("button");
 	addPlayerBtn.setAttribute("id", "add-new-player");
-	addPlayerBtn.innerText = "add";
-	footer.append(addPlayerBtn);
+	addPlayerBtn.innerText = "Add Player";
+	footerSide.append(addPlayerBtn);
 	addPlayerBtn.addEventListener("click", () => addPlayer());
 
 	const removePlayerBtn = document.createElement("button");
-	removePlayerBtn.innerText = "remove";
-	footer.append(removePlayerBtn);
+	removePlayerBtn.innerText = "Remove Player";
+	footerSide.append(removePlayerBtn);
 	removePlayerBtn.addEventListener("click", () => removeLastPlayer());
 }
 
@@ -42,15 +44,18 @@ export function updateScore() {
 }
 
 function addPlayer() {
+	if (teams.length == 5) {
+		return;
+	}
 	const footer = document.querySelector(".grid__footer");
 	var newPlayer = { teamName: "New Team", score: 0 };
 	teams.push(newPlayer);
 	createOnePlayer(newPlayer, footer);
-	console.log(teams);
+	//console.log(teams);
 }
 
 function removeLastPlayer() {
-	if (teams.length <= 1) return;
+	if (teams.length <= 2) return;
 	const footer = document.querySelector(".grid__footer");
 	const allPlayers = footer.querySelectorAll(".player");
 	const lastPlayer = allPlayers[allPlayers.length - 1];
@@ -64,7 +69,8 @@ function createOnePlayer(t, footer) {
 	// Add parent div
 	const playerDiv = document.createElement("div");
 	playerDiv.classList.add("player");
-	footer.insertBefore(playerDiv, addNewPlayerBtn);
+	footer.append(playerDiv);
+	//footer.insertBefore(playerDiv, addNewPlayerBtn);
 
 	// Team name
 	const team = document.createElement("p");
